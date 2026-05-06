@@ -9,8 +9,8 @@ This batch contains **51 problems** and **2 major projects** covering advanced d
 * **File Database:** Managing client records (Search, Delete, Update) through file streams.
 
 ## Projects
-- 01- Bank System (Phase 1)
-- 02- Bank System (Extension)
+- 01-Bank System (Phase 1)
+- 02-Bank System (Extension)
 
 ## Structure
 Each problem is in a separate folder with its `.cpp` file. This batch focuses on building complex systems and handling data structures effectively.
