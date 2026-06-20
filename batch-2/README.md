@@ -14,8 +14,8 @@ This batch bridges the gap between basic syntax and complex algorithmic thinking
 * **Custom Math Library:** Manual implementation of functions like `Sqrt`, `Round`, and `Ceil`.
 
 ## Projects
-01- (Rock-Paper-Scissors) Project
-02- (Math Quiz Game) Project
+- 01-(Rock-Paper-Scissors)
+- 02-(Math Quiz Game)
 
 ## Structure
 - **Problems:** 50 folders, each containing a specific algorithmic challenge.
