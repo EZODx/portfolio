@@ -13,44 +13,47 @@ portfolio/
 ├── batch-1/
 ├── batch-2/
 ├── batch-3/
-├── batch-4/
-└── batch-5/
+├── ...
+└── batch-n/
 ```
 
 Each batch may contain:
 
-- `problems/`
-- `projects/`
-- `README.md`
+* `problems/`
+* `projects/`
+* `README.md`
+
+> The structure may vary between batches depending on their content.
 
 ---
 
 ## Highlighted Projects
 
-- Bank System
-- Bank System Extension
-- Math Quiz Game
-- Rock Paper Scissors
-- Bank Extension 2
-- ATM System
+* Bank System
+* Bank System Extension
+* Math Quiz Game
+* Rock Paper Scissors
+* Bank Extension 2
+* ATM System
 
 ---
 
 ## Topics Covered
 
-- Problem Solving
-- Algorithms
-- Arrays & Matrices
-- Strings
-- File Handling
-- Recursion
-- Data Structures Fundamentals
-- Date & Time Logic
+* Problem Solving
+* Algorithms
+* Arrays & Matrices
+* Strings
+* File Handling
+* Recursion
+* Data Structures Fundamentals
+* Date & Time Logic
+* Object-Oriented Programming (OOP)
 
 ---
 
 ## Notes
 
-- Some problems include multiple solution approaches.
-- The repository is actively maintained and expanded over time.
-- Future additions are not limited to a single programming language.
+* Some problems include multiple solution approaches.
+* The repository is actively maintained and expanded over time.
+* Future additions are not limited to a single programming language.
