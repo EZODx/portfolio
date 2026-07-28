@@ -13,7 +13,8 @@ portfolio/
 ├── batch-1/
 ├── batch-2/
 ├── batch-3/
-└── batch-4/
+├── batch-4/
+└── batch-5/
 ```
 
 Each batch may contain:
@@ -30,6 +31,8 @@ Each batch may contain:
 - Bank System Extension
 - Math Quiz Game
 - Rock Paper Scissors
+- Bank Extension 2
+- ATM System
 
 ---
 
@@ -42,6 +45,7 @@ Each batch may contain:
 - File Handling
 - Recursion
 - Data Structures Fundamentals
+- Date & Time Logic
 
 ---
 
