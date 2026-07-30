@@ -1,0 +1,328 @@
+#pragma once
+
+#include <iostream>
+#include <string>
+#include "clsPerson.h"
+#include "clsString.h"
+#include <fstream>
+#include <vector>
+
+using namespace std;
+
+class clsBankClient : public clsPerson
+{
+
+private:
+	enum enMode { emptyMode = 0, updateMode = 1, addNewMode = 2 };
+	enMode _mode;
+	string _accountNumber;
+	string _pinCode;
+	float _accountBalance;
+	bool _markedForDelete = false;
+
+
+	string _ConvertClientObjectToLine(clsBankClient client, string separator = "#//#")
+	{
+
+		string stClientRecord = "";
+		stClientRecord += client.firstName + separator;
+		stClientRecord += client.lastName + separator;
+		stClientRecord += client.email + separator;
+		stClientRecord += client.phone + separator;
+		stClientRecord += client.AccountNumber() + separator;
+		stClientRecord += client.pinCode + separator;
+		stClientRecord += to_string(client.accountBalance);
+
+		return stClientRecord;
+
+
+	}
+
+	void _SaveClientsDataToFile(vector<clsBankClient> vClients)
+	{
+
+		fstream myFile;
+		myFile.open("Clients.txt", ios::out);
+
+		string dataLine;
+
+		for (clsBankClient& C : vClients)
+		{
+
+			if (C._markedForDelete == false)
+			{
+				dataLine = _ConvertClientObjectToLine(C);
+				myFile << dataLine << endl;
+			}
+		}
+
+		myFile.close();
+	}
+
+	static clsBankClient _ConvertLineToClientObject(string line, string separator = "#//#")
+	{
+
+		vector<string> vClient;
+		vClient = clsString::Split(line, separator);
+
+		return clsBankClient(enMode::updateMode, vClient[0], vClient[1], vClient[2], vClient[3],
+			vClient[4], vClient[5], stod(vClient[6]));
+	}
+
+	static vector<clsBankClient> _LoadClientsDataFromFile()
+	{
+
+		vector<clsBankClient> vClinets;
+
+		fstream myFile;
+		myFile.open("Clients.txt", ios::in);
+
+
+		if (myFile.is_open())
+		{
+
+			string line;
+			while (getline(myFile, line))
+			{
+				clsBankClient client = _ConvertLineToClientObject(line);
+				vClinets.push_back(client);
+
+			}
+
+			myFile.close();
+
+		}
+
+		return vClinets;
+	}
+
+	static clsBankClient _GetEmptyClientObject()
+	{
+		return clsBankClient(enMode::emptyMode, "", "", "", "", "", "", 0);
+	}
+
+	void _AddDataLineToFile(string stDataLine)
+	{
+		fstream myFile;
+		myFile.open("Clients.txt", ios::out | ios::app);
+
+		if (myFile.is_open())
+		{
+
+			myFile << stDataLine << endl;
+
+			myFile.close();
+		}
+
+	}
+
+	void _Update()
+	{
+		vector<clsBankClient> _vClient;
+		_vClient = _LoadClientsDataFromFile();
+
+		for (clsBankClient& C : _vClient)
+		{
+			if (C.AccountNumber() == AccountNumber())
+			{
+				C = *this;
+			}
+		}
+
+		_SaveClientsDataToFile(_vClient);
+	}
+
+	void _AddNew()
+	{
+		_AddDataLineToFile(_ConvertClientObjectToLine(*this));
+	}
+
+public:
+
+	clsBankClient(enMode mode, string firstName, string lastName, string email, string phone,
+		string accountNumber, string pinCode, float accountBalance) :
+		clsPerson(firstName, lastName, email, phone)
+	{
+		_mode = mode;
+		_accountNumber = accountNumber;
+		_pinCode = pinCode;
+		_accountBalance = accountBalance;
+	}
+
+	string AccountNumber()
+	{
+		return _accountNumber;
+	}
+
+	bool MarkedForDelete()
+	{
+		return _markedForDelete;
+	}
+
+	void SetPinCode(string pinCode)
+	{
+		_pinCode = pinCode;
+	}
+
+	string GetPinCode()
+	{
+		return _pinCode;
+	}
+	__declspec(property(get = GetPinCode, put = SetPinCode)) string pinCode;
+
+	void SetAccountBalance(float accountBalance)
+	{
+		_accountBalance = accountBalance;
+	}
+
+	float GetAccountBalance()
+	{
+		return _accountBalance;
+	}
+	__declspec(property(get = GetAccountBalance, put = SetAccountBalance)) float accountBalance;
+
+	void Print()
+	{
+		cout << "\nClient Card:";
+		cout << "\n___________________";
+		cout << "\nFirst Name  : " << firstName;
+		cout << "\nLast Name   : " << lastName;
+		cout << "\nFull Name   : " << FullName();
+		cout << "\nEmail       : " << email;
+		cout << "\nPhone       : " << phone;
+		cout << "\nAcc. Number : " << AccountNumber();
+		cout << "\nPIN Code    : " << GetPinCode();
+		cout << "\nBalance     : " << GetAccountBalance();
+		cout << "\n___________________\n";
+	}
+
+	static clsBankClient Find(string accountNumber)
+	{
+
+		fstream myFile;
+		myFile.open("Clients.txt", ios::in);
+
+		while (myFile.is_open())
+		{
+
+			string line;
+
+			while (getline(myFile, line))
+			{
+				clsBankClient client = _ConvertLineToClientObject(line);
+				if (client.AccountNumber() == accountNumber)
+				{
+					myFile.close();
+					return client;
+				}
+			}
+
+			myFile.close();
+
+		}
+
+		return _GetEmptyClientObject();
+	}
+
+	static clsBankClient Find(string accountNumber, string pinCode)
+	{
+
+		fstream myFile;
+		myFile.open("Clients.txt", ios::in);
+
+		while (myFile.is_open())
+		{
+
+			string line;
+
+			while (getline(myFile, line))
+			{
+				clsBankClient client = _ConvertLineToClientObject(line);
+				if (client.AccountNumber() == accountNumber && client.GetPinCode() == pinCode)
+				{
+					myFile.close();
+					return client;
+				}
+			}
+
+			myFile.close();
+		}
+
+		return _GetEmptyClientObject();
+	}
+
+	bool IsEmpty()
+	{
+		return (_mode == enMode::emptyMode);
+	}
+
+	enum enSaveResults { svFaildEmptyObject = 0, svSucceeded = 1, svFaildAccountNumberExists };
+
+	static clsBankClient GetAddNewClient(string accountNumber)
+	{
+		return clsBankClient(enMode::addNewMode, "", "", "", "", accountNumber, "", 0);
+	}
+
+	enSaveResults Save()
+	{
+
+		switch (_mode)
+		{
+		case enMode::emptyMode:
+		{
+			return enSaveResults::svFaildEmptyObject;
+			break;
+		}
+		case enMode::updateMode:
+		{
+
+			_Update();
+
+			return enSaveResults::svSucceeded;
+			break;
+		}
+		case enMode::addNewMode:
+			if (clsBankClient::DoesClientExist(_accountNumber))
+			{
+				return enSaveResults::svFaildAccountNumberExists;
+			}
+
+			_AddNew();
+			_mode = enMode::updateMode;
+			return enSaveResults::svSucceeded;
+
+		}
+
+	}
+
+	bool DeleteClient()
+	{
+		vector<clsBankClient> vClient;
+		vClient = _LoadClientsDataFromFile();
+
+		for (clsBankClient& C : vClient)
+		{
+			if (C.AccountNumber() == _accountNumber)
+			{
+				C._markedForDelete = true;
+				break;
+			}
+		}
+
+		_SaveClientsDataToFile(vClient);
+
+		*this = _GetEmptyClientObject();
+
+		return true;
+
+	}
+
+	static bool DoesClientExist(string accountNumber)
+	{
+
+		clsBankClient client = Find(accountNumber);
+
+		return (!client.IsEmpty());
+	}
+
+};
