@@ -35,6 +35,8 @@ Each batch may contain:
 * Rock Paper Scissors
 * Bank Extension 2
 * ATM System
+* Bank System (OOP)
+* Currency Exchange System
 
 ---
 
@@ -49,6 +51,7 @@ Each batch may contain:
 * Data Structures Fundamentals
 * Date & Time Logic
 * Object-Oriented Programming (OOP)
+* Template Programming
 
 ---
 
