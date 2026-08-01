@@ -52,6 +52,10 @@ Each batch may contain:
 * Date & Time Logic
 * Object-Oriented Programming (OOP)
 * Template Programming
+* Stacks and Queues
+* Singly and Doubly Linked Lists
+* STL
+* Maps and Unions
 
 ---
 
